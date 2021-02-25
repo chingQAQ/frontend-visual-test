@@ -1,0 +1,19 @@
+{
+  "name": "visual-regression-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backstop-init": "backstop init && del backstop.json && rename backstop_data engine && move engine test",
+    "backstop-reference": "node test/backstop.js --reference",
+    "backstop-test": "node test/backstop.js --test",
+    "backstop-approve": "node test/backstop.js --approve"
+  },
+  "devDependencies": {
+    "glob": "^7.1.6",
+    "yargs": "^16.2.0",
+    "backstopjs": "^5.1.0"
+  },
+  "author": "aion.chiu",
+  "license": "ISC"
+}
