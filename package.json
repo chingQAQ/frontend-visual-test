@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "backstop-init": "backstop init && del backstop.json && rename backstop_data engine && move engine test",
+    "test": "node test/init.js",
+    "backstop-init": "backstop init && del backstop.json && rename backstop_data engine && move engine test && node test/init.js",
     "backstop-reference": "node test/backstop.js --reference",
     "backstop-test": "node test/backstop.js --test",
     "backstop-approve": "node test/backstop.js --approve"
