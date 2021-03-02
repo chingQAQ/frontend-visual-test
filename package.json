@@ -10,10 +10,11 @@
     "backstop-test": "node test/backstop.js --test",
     "backstop-approve": "node test/backstop.js --approve"
   },
-  "devDependencies": {
+  "dependencies": {
+    "backstopjs": "^5.1.0",
     "glob": "^7.1.6",
-    "yargs": "^16.2.0",
-    "backstopjs": "^5.1.0"
+    "prompt-checkbox": "^2.2.0",
+    "yargs": "^16.2.0"
   },
   "author": "aion.chiu",
   "license": "ISC"

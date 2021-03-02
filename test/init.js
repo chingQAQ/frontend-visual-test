@@ -1,16 +1,40 @@
 ﻿const fs = require('fs');
 const { join, sep } = require('path');
-const glob = require('glob');
 const readline = require('readline');
+const Prompt = require('prompt-checkbox');
 let viewsPath;
 let port;
 let domainName = 'http://localhost:';
+let viewReference = [
+  {
+    name: 'phone',
+    width: 320,
+    height: 300
+  },
+  {
+    name: 'tablet',
+    width: 720,
+    height: 300
+  },
+  {
+    name: 'desktop',
+    width: 1024,
+    height: 300
+  }
+]
+let viewports;
 
 const create = {
   config: async ({ path, port, domainName: domain}) => {
     const createFilePath = join(__dirname, '.config');
     const setting = { config: { path, port, domain: `${domain}${port}/` } };
-    fs.writeFileSync(createFilePath, JSON.stringify(setting, null, 2), 'utf8');
+    return fs.writeFileSync(createFilePath, JSON.stringify(setting, null, 2), 'utf8');
+  },
+  viewports: async (views) => {
+    const createFilePath = join(__dirname, '.config');
+    const config = JSON.parse(fs.readFileSync(createFilePath, 'utf8'));
+    config.viewports = viewReference.filter(i => views.some(a => i.name.includes(a)));
+    return fs.writeFileSync(createFilePath, JSON.stringify(config, null, 2), 'utf8');
   }
 }
 
@@ -41,14 +65,36 @@ const question2 = () => new Promise(resolve => {
   });
 })
 
+const question3 = () => new Promise(resolve => {
+  const prompt = new Prompt({
+    name: 'viewports',
+    message: '請選擇欲測試之裝置寬度(可複選)',
+    choices: [
+      'phone',
+      'tablet',
+      'desktop'
+    ]
+  });
+  prompt.ask(answers => {
+    if (answers.length === 0) {
+      console.log('測試尺寸不能為null');
+      process.exit();
+    }
+    viewports = answers;
+    resolve();
+  });
+})
+
 const run = async () => {
   await question1();
   await question2();
+  await question3();
   rl.close();
 }
 
 rl.on('close', async () => {
   await create.config({ path: viewsPath, port, domainName});
+  await create.viewports(viewports);
 })
 
 run();
