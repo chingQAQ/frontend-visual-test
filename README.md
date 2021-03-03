@@ -86,7 +86,7 @@ abc/def/ghi/index.html > abc/def/ghi/
 `npm run visual_testing_init`  
 生成測試用到的檔案，刪除backstop.config這支預設檔案，並執行搬移生成的檔案 (請使用管理員權限開啟vscode)
 
-`npm run visual_testing_reference`
+`npm run visual_testing_reference`  
 將目前的頁面快照下來當作範本，與後續頁面做比對  
 
 `npm run visual_testing_test`  
