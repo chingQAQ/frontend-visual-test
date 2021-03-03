@@ -1,0 +1,22 @@
+{
+  "name": "visual-regression-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "--------------------------": "",
+    "visual_testing_merge": "node visual-testing-merge.js",
+    "visual_testing_init": "backstop init && del backstop.json && rename backstop_data engine && move engine test && node test/visual-testing-init.js",
+    "visual_testing_reference": "node test/visual-testing.js --reference",
+    "visual_testing_test": "node test/visual-testing.js --test",
+    "visual_testing_approve": "node test/visual-testing.js --approve"
+  },
+  "devDependencies": {
+    "backstopjs": "^5.1.0",
+    "glob": "^7.1.6",
+    "prompt-checkbox": "^2.2.0",
+    "yargs": "^16.2.0"
+  },
+  "author": "aion.chiu",
+  "license": "ISC"
+}

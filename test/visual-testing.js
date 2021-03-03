@@ -8,7 +8,7 @@ const config = getConfig().config;
 const viewports = getConfig().viewports;
 const projectPath = `${config.path}${args.p || ''}`;
 const pathName = config.path.split(parse(process.cwd()).name + '/')[1];
-const projectConfig = require('./backstop.config')({
+const projectConfig = require('./visual-testing-config')({
   project: 'testing-result',
   viewports,
   scenarios: getProjectScenarios(projectPath)

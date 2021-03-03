@@ -24,17 +24,19 @@ let viewReference = [
 ]
 let viewports;
 
-const create = {
-  config: async ({ path, port, domainName: domain}) => {
-    const createFilePath = join(__dirname, '.config');
-    const setting = { config: { path, port, domain: `${domain}${port}/` } };
-    return fs.writeFileSync(createFilePath, JSON.stringify(setting, null, 2), 'utf8');
-  },
-  viewports: async (views) => {
-    const createFilePath = join(__dirname, '.config');
-    const config = JSON.parse(fs.readFileSync(createFilePath, 'utf8'));
-    config.viewports = viewReference.filter(i => views.some(a => i.name.includes(a)));
-    return fs.writeFileSync(createFilePath, JSON.stringify(config, null, 2), 'utf8');
+function Create() {
+  const createFilePath = join(__dirname, '.config');
+  return {
+    config: async function ({ path, port, domainName: domain }) {
+      const setting = { config: { path, port, domain: `${domain}${port}/` } };
+      return this.writeToFile(setting);
+    },
+    viewports: async function (views) {
+      const config = JSON.parse(fs.readFileSync(createFilePath, 'utf8'));
+      config.viewports = viewReference.filter(i => views.some(a => i.name.includes(a)));
+      return this.writeToFile(config);
+    },
+    writeToFile: async data => fs.writeFileSync(createFilePath, JSON.stringify(data, null, 2), 'utf8')
   }
 }
 
@@ -93,8 +95,11 @@ const run = async () => {
 }
 
 rl.on('close', async () => {
+  const create = new Create();
   await create.config({ path: viewsPath, port, domainName});
+  console.log('config已寫入');
   await create.viewports(viewports);
+  console.log('view port已寫入');
 })
 
 run();
